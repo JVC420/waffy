@@ -1,0 +1,385 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────
+   Tokens Waffy — manual de marca
+   ────────────────────────────────────────────────────────────── */
+@theme {
+  /* Color — hex oficiales del manual (coral y ámbar); el resto viene del brief */
+  --color-coral: #e95154;
+  --color-ambar: #fbaa35;
+  --color-amarillo: #ffc400;
+  --color-hueso: #ede9e5;
+  --color-blanco: #ffffff;
+  --color-tinta: #1a1a1a;
+  --color-grafito: #4a4a4a;
+
+  /* Tintas del manual: solo para formas orgánicas y fondos suaves, nunca texto */
+  --color-coral-suave: #f08b8d;
+  --color-coral-claro: #fbe2e2;
+  --color-ambar-suave: #fcc678;
+  --color-ambar-claro: #fef1dd;
+
+  /* Radios: nada de esquinas rectas */
+  --radius-card: 1.5rem;
+  --radius-card-lg: 2.5rem;
+  --radius-pill: 9999px;
+
+  /* Movimiento */
+  --ease-waffy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-rebote: cubic-bezier(0.34, 1.35, 0.64, 1);
+
+  /* Layout */
+  --container-site: 90rem;
+  --spacing-section: clamp(5rem, 3.5rem + 6vw, 10rem);
+  --breakpoint-3xl: 120rem;
+
+  /* Escala tipográfica */
+  --text-h1: clamp(3rem, 1.9rem + 4.6vw, 7rem);
+  --text-h1--line-height: 0.95;
+  --text-h1--letter-spacing: -0.02em;
+
+  --text-h2: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.015em;
+
+  --text-h3: clamp(1.5rem, 1.2rem + 1.4vw, 2.5rem);
+  --text-h3--line-height: 1.05;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-lead--line-height: 1.5;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.14em;
+}
+
+@theme inline {
+  --font-display: var(--font-gluten), "Gluten", ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-poppins), "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Base
+   ────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 5.5rem;
+  }
+
+  /* Lenis (scroll suave) */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  body {
+    background: var(--color-hueso);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-ambar);
+    color: var(--color-tinta);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-tinta);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Logo: sin sombras, sin filtros, sin distorsión. Nunca. */
+  .logo,
+  .logo * {
+    filter: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Componentes
+   ────────────────────────────────────────────────────────────── */
+@layer components {
+  /* Botones píldora */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid transparent;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color 0.4s var(--ease-waffy),
+      color 0.4s var(--ease-waffy),
+      border-color 0.4s var(--ease-waffy),
+      transform 0.4s var(--ease-waffy);
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .btn-sm { height: 2.5rem; padding-inline: 1.25rem; font-size: 0.875rem; }
+  .btn-md { height: 3rem; padding-inline: 1.75rem; font-size: 1rem; }
+  .btn-lg { height: 3.5rem; padding-inline: 2.25rem; font-size: 1.0625rem; }
+
+  .btn-coral { background: var(--color-coral); color: var(--color-blanco); }
+  .btn-coral:hover { background: color-mix(in oklab, var(--color-coral) 86%, var(--color-tinta)); }
+
+  .btn-tinta { background: var(--color-tinta); color: var(--color-blanco); }
+  .btn-tinta:hover { background: var(--color-grafito); }
+
+  .btn-blanco { background: var(--color-blanco); color: var(--color-tinta); }
+  .btn-blanco:hover { background: var(--color-hueso); }
+
+  .btn-ambar { background: var(--color-ambar); color: var(--color-tinta); }
+  .btn-ambar:hover { background: color-mix(in oklab, var(--color-ambar) 88%, var(--color-tinta)); }
+
+  .btn-fantasma { background: transparent; color: var(--color-tinta); border-color: currentColor; }
+  .btn-fantasma:hover { background: var(--color-tinta); color: var(--color-blanco); border-color: var(--color-tinta); }
+
+  .btn-fantasma-blanco { background: transparent; color: var(--color-blanco); border-color: rgb(255 255 255 / 0.65); }
+  .btn-fantasma-blanco:hover { background: var(--color-blanco); color: var(--color-tinta); border-color: var(--color-blanco); }
+
+  .btn-icono { width: 3rem; height: 3rem; padding: 0; }
+  .btn-icono.btn-sm { width: 2.5rem; height: 2.5rem; }
+  .btn-icono.btn-lg { width: 3.5rem; height: 3.5rem; }
+
+  /* Chips de filtro */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.5rem;
+    padding-inline: 1.125rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid color-mix(in oklab, var(--color-tinta) 12%, transparent);
+    background: var(--color-blanco);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color 0.35s var(--ease-waffy),
+      color 0.35s var(--ease-waffy),
+      border-color 0.35s var(--ease-waffy),
+      transform 0.35s var(--ease-waffy);
+  }
+  .chip:hover { border-color: var(--color-tinta); }
+  .chip:active { transform: scale(0.97); }
+  .chip[aria-pressed="true"],
+  .chip-activo {
+    background: var(--color-tinta);
+    color: var(--color-blanco);
+    border-color: var(--color-tinta);
+  }
+  .chip[aria-pressed="true"]:hover { background: var(--color-grafito); border-color: var(--color-grafito); }
+
+  /* Badges píldora */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 1.75rem;
+    padding-inline: 0.75rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .badge-ambar { background: var(--color-ambar); color: var(--color-tinta); }
+  .badge-hueso { background: var(--color-hueso); color: var(--color-tinta); }
+  .badge-blanco { background: var(--color-blanco); color: var(--color-tinta); }
+  .badge-coral { background: var(--color-coral); color: var(--color-blanco); }
+  .badge-tinta { background: var(--color-tinta); color: var(--color-blanco); }
+
+  /* Tarjeta base */
+  .card {
+    background: var(--color-blanco);
+    border-radius: var(--radius-card);
+    transition: transform 0.6s var(--ease-waffy), box-shadow 0.6s var(--ease-waffy);
+  }
+  .card-lg { border-radius: var(--radius-card-lg); }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 32px 56px -32px rgb(26 26 26 / 0.22);
+  }
+
+  /* Contenedor píldora coral: gesto firma de la marca */
+  .pildora-coral {
+    background: var(--color-coral);
+    color: var(--color-blanco);
+    /* En móvil el radio completo se comería el contenido: radio grande pero no semicircular. */
+    border-radius: 0 5rem 5rem 0;
+  }
+  @media (min-width: 48rem) {
+    .pildora-coral {
+      border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+    }
+  }
+
+  /* Enlace de navegación con subrayado que crece */
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    text-decoration: none;
+    color: inherit;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.3em;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-waffy);
+  }
+  .nav-link:hover::after,
+  .nav-link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    line-height: 1;
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* Contenedor del sitio */
+  .contenedor {
+    width: 100%;
+    max-width: var(--container-site);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 48rem) { .contenedor { padding-inline: 2.5rem; } }
+  @media (min-width: 80rem) { .contenedor { padding-inline: 4rem; } }
+
+  /* Padding lateral alineado con el contenedor, para carruseles a sangre */
+  .sangria-contenedor {
+    --sangria: max(1.5rem, calc((100vw - var(--container-site)) / 2 + 1.5rem));
+    padding-inline: var(--sangria);
+    /* El snap debe respetar el padding: si no, el primer ítem se pega al borde. */
+    scroll-padding-inline: var(--sangria);
+  }
+  @media (min-width: 48rem) {
+    .sangria-contenedor { --sangria: max(2.5rem, calc((100vw - var(--container-site)) / 2 + 2.5rem)); }
+  }
+  @media (min-width: 80rem) {
+    .sangria-contenedor { --sangria: max(4rem, calc((100vw - var(--container-site)) / 2 + 4rem)); }
+  }
+
+  /* Carrusel con scroll horizontal sin barra visible */
+  .carrusel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .carrusel::-webkit-scrollbar { display: none; }
+  .carrusel > * { scroll-snap-align: start; flex-shrink: 0; }
+
+  /* Slider (calculadora) */
+  .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(to right, var(--color-coral) 0 var(--progreso, 0%), color-mix(in oklab, var(--color-tinta) 12%, transparent) var(--progreso, 0%) 100%);
+    outline: none;
+    cursor: pointer;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-blanco);
+    border: 3px solid var(--color-coral);
+    box-shadow: 0 6px 16px -6px rgb(26 26 26 / 0.35);
+    transition: transform 0.3s var(--ease-waffy);
+  }
+  .slider::-webkit-slider-thumb:hover { transform: scale(1.08); }
+  .slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-blanco);
+    border: 3px solid var(--color-coral);
+    box-shadow: 0 6px 16px -6px rgb(26 26 26 / 0.35);
+  }
+  .slider:focus-visible { outline: 2px solid var(--color-tinta); outline-offset: 6px; }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Utilidades
+   ────────────────────────────────────────────────────────────── */
+@utility text-balance { text-wrap: balance; }
+@utility text-pretty { text-wrap: pretty; }

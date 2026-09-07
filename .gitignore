@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+.env*
+
+# Configuración local del panel de vista previa
+.claude/
+
+# Manual de marca: no se publica con el código (los trazados ya están extraídos en src/components/ui/logo-paths.ts)
+Waffy_Manual de marca.pdf
