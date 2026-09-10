@@ -1,0 +1,12 @@
+# Configuración de despliegue en Netlify.
+# Netlify detecta Next.js y usa su runtime oficial (@netlify/plugin-nextjs).
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
