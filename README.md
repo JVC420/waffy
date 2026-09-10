@@ -17,6 +17,10 @@ Abre http://localhost:3000. Node 20 o superior.
 | `npm run build` | Build de producción |
 | `npm run typecheck` | Comprobación de tipos |
 
+## Despliegue
+
+El repositorio ya trae `netlify.toml`, así que Netlify no necesita configuración manual: detecta Next.js, instala su runtime oficial y publica en cada push a `main`. Basta con importar el repositorio desde el panel de Netlify. También funciona igual en Vercel sin tocar nada.
+
 ## Stack
 
 - Next.js 15 (App Router) + React 19 + TypeScript
